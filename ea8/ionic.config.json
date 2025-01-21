@@ -1,0 +1,7 @@
+{
+  "name": "ea8",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
