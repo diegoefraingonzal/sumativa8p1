@@ -1,52 +1,57 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Registro de Usuarios</ion-title>
+  <ion-toolbar color="tertiary">
+    <ion-title>Usuarios EA8 </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div class="form-container">
-    <h2>Formulario de Registro</h2>
-    <form [formGroup]="userForm" (ngSubmit)="addUser()">
-      <ion-item class="custom-item">
-        <ion-label position="floating">Nombre</ion-label>
-        <ion-input formControlName="name"></ion-input>
-      </ion-item>
+  <div class="form-wrapper">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ editingIndex !== null ? 'Editar Usuario' : 'Registrar Usuario' }}</ion-card-title>
+      </ion-card-header>
 
-      <ion-item class="custom-item">
-        <ion-label position="floating">Correo Electrónico</ion-label>
-        <ion-input formControlName="email"></ion-input>
-      </ion-item>
+      <ion-card-content>
+        <form [formGroup]="userForm" (ngSubmit)="addUser()">
+          <ion-item>
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input formControlName="name"></ion-input>
+          </ion-item>
 
-      <ion-item class="custom-item">
-        <ion-label position="floating">Edad</ion-label>
-        <ion-input formControlName="age" type="number"></ion-input>
-      </ion-item>
+          <ion-item>
+            <ion-label position="floating">Correo Electrónico</ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
 
-      <ion-button type="submit" expand="block" color="success" [disabled]="userForm.invalid">
-        {{ editingIndex !== null ? 'Editar' : 'Registrar' }} Usuario
-      </ion-button>
-    </form>
+          <ion-item>
+            <ion-label position="floating">Edad</ion-label>
+            <ion-input type="number" formControlName="age"></ion-input>
+          </ion-item>
+
+          <ion-button expand="block" type="submit" color="tertiary" [disabled]="userForm.invalid">
+            {{ editingIndex !== null ? 'Actualizar' : 'Registrar' }}
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
   </div>
 
-  <div class="table-container">
+  <div class="user-list">
     <h3>Usuarios Registrados</h3>
-    <ion-grid>
-      <ion-row>
-        <ion-col size="4"><strong>Nombre</strong></ion-col>
-        <ion-col size="4"><strong>Correo</strong></ion-col>
-        <ion-col size="2"><strong>Edad</strong></ion-col>
-        <ion-col size="2"><strong>Acciones</strong></ion-col>
-      </ion-row>
-      <ion-row *ngFor="let user of users; let i = index">
-        <ion-col size="4">{{ user.name }}</ion-col>
-        <ion-col size="4">{{ user.email }}</ion-col>
-        <ion-col size="2">{{ user.age }}</ion-col>
-        <ion-col size="2">
-          <ion-button (click)="editUser(i)" color="primary">Editar</ion-button>
-          <ion-button (click)="deleteUser(i)" color="danger">Eliminar</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <ion-list>
+      <ion-card *ngFor="let user of users; let i = index">
+        <ion-card-header>
+          <ion-card-title>{{ user.name }}</ion-card-title>
+          <ion-card-subtitle>{{ user.email }}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <p>Edad: {{ user.age }} años</p>
+          <div class="button-group">
+            <ion-button size="small" color="warning" (click)="editUser(i)">Editar</ion-button>
+            <ion-button size="small" color="danger" (click)="deleteUser(i)">Eliminar</ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
   </div>
 </ion-content>
